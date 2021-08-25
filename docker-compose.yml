@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  java:
+    image: openjdk:15-slim
+    ports:
+      - 8080:8080
+    tty: true
+    volumes:
+      - .:/srv:cached
+    working_dir: /srv
+    depends_on:
+          - db
+  db:
+    image: mysql:5.7
+    container_name: mysql_study_spring
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: study_spring
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    volumes:
+    - ./docker/db/data:/var/lib/mysql
+    - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./docker/db/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+    - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
