@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("todo")
 public class TodoController {
     @Autowired
-    private TodoRepository repository;
+    private TodoService service;
 
     @GetMapping("")
     List<Todo> searchTodoAll() {
