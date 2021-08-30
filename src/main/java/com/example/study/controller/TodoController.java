@@ -15,8 +15,9 @@ public class TodoController {
     private TodoService service;
 
     @GetMapping("")
-    List<Todo> searchTodoAll() {
-        return repository.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    List<Todo> searchTodoAll(@RequestParam(name = "is_completed", defaultValue = "0" ) int isCompleted, @RequestParam(name = "sort_type", defaultValue = "0") int sortType) {
+        return service.searchTodoAll(isCompleted, sortType);
     }
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
